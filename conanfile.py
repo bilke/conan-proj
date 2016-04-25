@@ -36,7 +36,7 @@ class ProjConan(ConanFile):
         else:
             self.run("mkdir _build")
         cd_build = "cd _build"
-        self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DBUILD_NAD2BIN=OFF -DCMAKE_INSTALL_PREFIX=../%s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line))
+        self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../%s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
         self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
 
