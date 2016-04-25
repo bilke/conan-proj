@@ -86,12 +86,18 @@ link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #################################################################################
 # Installation
 #################################################################################
-include(Proj4InstallPath)
-set(BINDIR "${DEFAULT_BINDIR}" CACHE PATH "The directory to install binaries into.")
-set(LIBDIR "${DEFAULT_LIBDIR}" CACHE PATH "The directory to install libraries into.")
-set(DATADIR "${DEFAULT_DATADIR}" CACHE PATH "The directory to install data files into.")
-set(DOCDIR "${DEFAULT_DOCDIR}" CACHE PATH "The directory to install doc files into.")
-set(INCLUDEDIR "${DEFAULT_INCLUDEDIR}" CACHE PATH "The directory to install includes into.")
+# Just use default paths
+# include(Proj4InstallPath)
+#set(BINDIR "${DEFAULT_BINDIR}" CACHE PATH "The directory to install binaries into.")
+#set(LIBDIR "${DEFAULT_LIBDIR}" CACHE PATH "The directory to install libraries into.")
+#set(DATADIR "${DEFAULT_DATADIR}" CACHE PATH "The directory to install data files into.")
+#set(DOCDIR "${DEFAULT_DOCDIR}" CACHE PATH "The directory to install doc files into.")
+#set(INCLUDEDIR "${DEFAULT_INCLUDEDIR}" CACHE PATH "The directory to install includes into.")
+set(BINDIR ${CMAKE_INSTALL_PREFIX}/bin)
+set(LIBDIR ${CMAKE_INSTALL_PREFIX}/LIB)
+set(DATADIR ${CMAKE_INSTALL_PREFIX}/share/proj)
+set(DOCDIR ${CMAKE_INSTALL_PREFIX}/doc/proj)
+set(INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
 
 #################################################################################
 # Build configured components
