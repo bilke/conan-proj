@@ -93,5 +93,10 @@ set(DATADIR "${DEFAULT_DATADIR}" CACHE PATH "The directory to install data files
 set(DOCDIR "${DEFAULT_DOCDIR}" CACHE PATH "The directory to install doc files into.")
 set(INCLUDEDIR "${DEFAULT_INCLUDEDIR}" CACHE PATH "The directory to install includes into.")
 
+#################################################################################
+# Build configured components
+#################################################################################
+include_directories(${PROJ4_SOURCE_DIR}/src)
+
 # removed nad, man, cmake subdirs for conan package
 add_subdirectory(${PROJ4_SOURCE_DIR}/src)
