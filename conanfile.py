@@ -55,6 +55,9 @@ class ProjConan(ConanFile):
 
     def package_info(self):
         if self.settings.os == "Windows":
-            self.cpp_info.libs = ["proj_4_9"]
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs = ["proj_4_9_d"]
+            else:
+                self.cpp_info.libs = ["proj_4_9"]
         else:
             self.cpp_info.libs = ["proj"]
