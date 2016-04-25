@@ -7,7 +7,7 @@ class ProjConan(ConanFile):
     version = "4.9.2"
     generators = "cmake"
     settings = "os", "compiler", "build_type", "arch"
-    exports = ["CMakeLists.txt", "FindPROJ.cmake"]
+    exports = ["CMakeLists.txt", "FindPROJ4.cmake"]
     url="http://github.com/bilke/conan-proj"
     license="https://github.com/OSGeo/proj.4"
 
@@ -41,7 +41,7 @@ class ProjConan(ConanFile):
         self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
 
     def package(self):
-        self.copy("FindPROJ.cmake", ".", ".")
+        self.copy("FindPROJ4.cmake", ".", ".")
         self.copy("*", dst=".", src=self.INSTALL_DIR)
 
     def package_info(self):
