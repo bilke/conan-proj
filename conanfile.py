@@ -7,6 +7,8 @@ class ProjConan(ConanFile):
     version = "4.9.2"
     generators = "cmake"
     settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
     exports = ["CMakeLists.txt", "FindPROJ4.cmake"]
     url="http://github.com/bilke/conan-proj"
     license="https://github.com/OSGeo/proj.4"
@@ -45,7 +47,12 @@ class ProjConan(ConanFile):
         else:
             self.run("mkdir _build")
         cd_build = "cd _build"
-        self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../%s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line))
+        CMAKE_OPTIONALS = ""
+        if self.options.shared == False:
+            CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=OFF"
+        else:
+            CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=ON"
+        self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../%s %s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line, CMAKE_OPTIONALS))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
         self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
 
