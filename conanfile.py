@@ -47,7 +47,7 @@ class ProjConan(ConanFile):
         else:
             self.run("mkdir _build")
         cd_build = "cd _build"
-        CMAKE_OPTIONALS = ""
+        CMAKE_OPTIONALS = "-DBUILD_CS2CS=OFF -DBUILD_PROJ=OFF -DBUILD_GEOD=OFF -DBUILD_NAD2BIN=OFF "
         if self.options.shared == False:
             CMAKE_OPTIONALS += "-DBUILD_LIBPROJ_SHARED=OFF "
         else:
