@@ -8,3 +8,6 @@ include_directories(${CONAN_INCLUDE_DIRS_PROJ})
 add_executable(test test.c)
 
 target_link_libraries(test ${CONAN_LIBS})
+if(UNIX AND NOT APPLE)
+    TARGET_LINK_LIBRARIES(test m)
+endif()
