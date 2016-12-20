@@ -49,9 +49,9 @@ class ProjConan(ConanFile):
         cd_build = "cd _build"
         CMAKE_OPTIONALS = ""
         if self.options.shared == False:
-            CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=OFF"
+            CMAKE_OPTIONALS += "-DBUILD_LIBPROJ_SHARED=OFF "
         else:
-            CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=ON"
+            CMAKE_OPTIONALS += "-DBUILD_LIBPROJ_SHARED=ON "
         self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../%s %s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line, CMAKE_OPTIONALS))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
         self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
