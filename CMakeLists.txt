@@ -101,8 +101,4 @@ include_directories(${PROJ4_SOURCE_DIR}/src)
 # removed nad, man, cmake subdirs for conan package
 add_subdirectory(${PROJ4_SOURCE_DIR}/src)
 
-if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(proj "${CMAKE_THREAD_LIBS_INIT}")
-endif()
-
 install(FILES FindPROJ4.cmake DESTINATION .)

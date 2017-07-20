@@ -54,7 +54,6 @@ class ProjConan(ConanFile):
         else:
             cmake.definitions["BUILD_LIBPROJ_SHARED"] = "ON"
         cmake.configure(build_dir="build")
-        # cmake.build()
         cmake.build(target="install")
 
     def package_info(self):
