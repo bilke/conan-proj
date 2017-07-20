@@ -1,6 +1,8 @@
 project(MyProj C)
 cmake_minimum_required(VERSION 2.8.12)
 
+find_package (Threads)
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
