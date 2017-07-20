@@ -5,9 +5,10 @@ sudo: required
 language: python
 env:
   global:
-    - CONAN_UPLOAD=1
+    - CONAN_UPLOAD="https://ogs.jfrog.io/ogs/api/conan/conan"
     - CONAN_REFERENCE="proj/4.9.2"
-    - CONAN_USERNAME="bilke"
+    - CONAN_USERNAME="jenkins"
+    - CONAN_LOGIN_USERNAME="jenkins"
     - CONAN_CHANNEL="testing"
     - CONAN_TOTAL_PAGES=1
     - CONAN_CURRENT_PAGE=1

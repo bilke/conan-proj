@@ -4,6 +4,8 @@ from conans.tools import download, unzip, patch
 
 class ProjConan(ConanFile):
     name = "proj"
+    description = """proj.4 is a library which converts geographic longitude and
+                     latitude coordinates into cartesian coordinates."""
     version = "4.9.2"
     generators = "cmake"
     settings = "os", "compiler", "build_type", "arch"
@@ -14,7 +16,6 @@ class ProjConan(ConanFile):
     license="https://github.com/OSGeo/proj.4"
 
     ZIP_FOLDER_NAME = "proj.4-%s" % version
-    INSTALL_DIR = "_install"
 
     def source(self):
         zip_name = self.version + ".zip"
@@ -29,7 +30,7 @@ class ProjConan(ConanFile):
 @@ -38,2 +38,2 @@ set(PACKAGE_VERSION "${${PROJECT_INTERN_
 
 -configure_file(cmake/proj_config.cmake.in src/proj_config.h)
-+configure_file(${PROJ4_SOURCE_DIR}/cmake/proj_config.cmake.in ${CMAKE_SOURCE_DIR}/_build/%s/src/proj_config.h)
++configure_file(${PROJ4_SOURCE_DIR}/cmake/proj_config.cmake.in ${CMAKE_SOURCE_DIR}/build/%s/src/proj_config.h)
 ''' % self.ZIP_FOLDER_NAME
         patch(patch_string=patch_content1, base_path=self.ZIP_FOLDER_NAME)
         patch_content2 = '''--- cmake/Proj4InstallPath.cmake	2016-04-25 09:27:06.000000000 +0200
@@ -41,24 +42,20 @@ class ProjConan(ConanFile):
    set(DEFAULT_BIN_SUBDIR bin)
 '''
         patch(patch_string=patch_content2, base_path=self.ZIP_FOLDER_NAME)
-        cmake = CMake(self.settings)
-        if self.settings.os == "Windows":
-            self.run("IF not exist _build mkdir _build")
-        else:
-            self.run("mkdir _build")
-        cd_build = "cd _build"
-        CMAKE_OPTIONALS = "-DBUILD_CS2CS=OFF -DBUILD_PROJ=OFF -DBUILD_GEOD=OFF -DBUILD_NAD2BIN=OFF "
-        if self.options.shared == False:
-            CMAKE_OPTIONALS += "-DBUILD_LIBPROJ_SHARED=OFF "
-        else:
-            CMAKE_OPTIONALS += "-DBUILD_LIBPROJ_SHARED=ON "
-        self.run("%s && cmake .. -DPROJ4_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../%s %s %s" % (cd_build, self.INSTALL_DIR, cmake.command_line, CMAKE_OPTIONALS))
-        self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
-        self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
 
-    def package(self):
-        self.copy("FindPROJ4.cmake", ".", ".")
-        self.copy("*", dst=".", src=self.INSTALL_DIR)
+        cmake = CMake(self)
+        cmake.definitions["BUILD_CS2CS"] = "OFF"
+        cmake.definitions["BUILD_PROJ"] = "OFF"
+        cmake.definitions["BUILD_GEOD"] = "OFF"
+        cmake.definitions["BUILD_NAD2BIN"] = "OFF"
+        cmake.definitions["PROJ4_TESTS"] = "OFF"
+        if self.options.shared == False:
+            cmake.definitions["BUILD_LIBPROJ_SHARED"] = "OFF"
+        else:
+            cmake.definitions["BUILD_LIBPROJ_SHARED"] = "ON"
+        cmake.configure(build_dir="build")
+        # cmake.build()
+        cmake.build(target="install")
 
     def package_info(self):
         if self.settings.os == "Windows":
