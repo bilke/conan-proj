@@ -6,7 +6,7 @@ environment:
 
     CONAN_UPLOAD: "https://ogs.jfrog.io/ogs/api/conan/conan"
     CONAN_REFERENCE: "proj/4.9.2"
-    CONAN_USERNAME: "jenkins"
+    CONAN_USERNAME: "bilke"
     CONAN_LOGIN_USERNAME: "jenkins"
     CONAN_CHANNEL: "testing"
     VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
