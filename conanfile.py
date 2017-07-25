@@ -44,10 +44,11 @@ class ProjConan(ConanFile):
         patch(patch_string=patch_content2, base_path=self.ZIP_FOLDER_NAME)
 
         cmake = CMake(self)
-        cmake.definitions["BUILD_CS2CS"] = "OFF"
-        cmake.definitions["BUILD_PROJ"] = "OFF"
-        cmake.definitions["BUILD_GEOD"] = "OFF"
-        cmake.definitions["BUILD_NAD2BIN"] = "OFF"
+        if self.settings.os != "Windows":
+            cmake.definitions["BUILD_CS2CS"] = "OFF"
+            cmake.definitions["BUILD_PROJ"] = "OFF"
+            cmake.definitions["BUILD_GEOD"] = "OFF"
+            cmake.definitions["BUILD_NAD2BIN"] = "OFF"
         cmake.definitions["PROJ4_TESTS"] = "OFF"
         if self.options.shared == False:
             cmake.definitions["BUILD_LIBPROJ_SHARED"] = "OFF"
