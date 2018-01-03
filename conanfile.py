@@ -17,6 +17,9 @@ class ProjConan(ConanFile):
 
     ZIP_FOLDER_NAME = "proj.4-%s" % version
 
+    def config(self):
+        del self.settings.compiler.libcxx
+
     def source(self):
         zip_name = self.version + ".zip"
         download("https://github.com/OSGeo/proj.4/archive/%s" % zip_name , zip_name)
