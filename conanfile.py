@@ -9,8 +9,8 @@ class ProjConan(ConanFile):
     version = "4.9.2"
     generators = "cmake"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=True"
     exports = ["CMakeLists.txt", "FindPROJ4.cmake"]
     url="http://github.com/bilke/conan-proj"
     license="https://github.com/OSGeo/proj.4"
@@ -19,6 +19,8 @@ class ProjConan(ConanFile):
 
     def config(self):
         del self.settings.compiler.libcxx
+        if self.settings.compiler == 'Visual Studio':
+            self.options.remove("fPIC")
 
     def source(self):
         zip_name = self.version + ".zip"
