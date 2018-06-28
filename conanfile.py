@@ -70,3 +70,5 @@ class ProjConan(ConanFile):
                 self.cpp_info.libs = ["proj_4_9"]
         else:
             self.cpp_info.libs = ["proj"]
+        if self.settings.os == 'Linux':
+            self.cpp_info.libs.append('pthread')
