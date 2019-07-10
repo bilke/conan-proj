@@ -15,18 +15,17 @@ class ProjConan(ConanFile):
     url="http://github.com/bilke/conan-proj"
     license="https://github.com/OSGeo/proj.4"
 
-    ZIP_FOLDER_NAME = "proj.4-%s" % version
-
     def config(self):
         del self.settings.compiler.libcxx
         if self.settings.compiler == 'Visual Studio':
             self.options.remove("fPIC")
 
     def source(self):
-        zip_name = self.version + ".zip"
+        zip_name = self.version + "-maintenance.zip"
         download("https://github.com/OSGeo/proj.4/archive/%s" % zip_name , zip_name)
         unzip(zip_name)
         os.unlink(zip_name)
+        os.rename('PROJ-{0}-maintenance'.format(self.version), 'proj')
 
     def build(self):
         # produced with `diff -U 1 -p Proj4Config.cmake tmp.cmake`
@@ -35,9 +34,9 @@ class ProjConan(ConanFile):
 @@ -38,2 +38,2 @@ set(PACKAGE_VERSION "${${PROJECT_INTERN_
 
 -configure_file(cmake/proj_config.cmake.in src/proj_config.h)
-+configure_file(${PROJ4_SOURCE_DIR}/cmake/proj_config.cmake.in ${CMAKE_SOURCE_DIR}/build/%s/src/proj_config.h)
-''' % self.ZIP_FOLDER_NAME
-        patch(patch_string=patch_content1, base_path=self.ZIP_FOLDER_NAME)
++configure_file(${PROJ4_SOURCE_DIR}/cmake/proj_config.cmake.in ${CMAKE_SOURCE_DIR}/build/proj/src/proj_config.h)
+'''
+        patch(patch_string=patch_content1, base_path='proj')
         patch_content2 = '''--- cmake/Proj4InstallPath.cmake	2016-04-25 09:27:06.000000000 +0200
 +++ cmake/Proj4InstallPath.cmake	2016-04-25 09:28:02.000000000 +0200
 @@ -24,3 +24,3 @@ ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_T
@@ -46,7 +45,7 @@ class ProjConan(ConanFile):
 +if(FALSE)
    set(DEFAULT_BIN_SUBDIR bin)
 '''
-        patch(patch_string=patch_content2, base_path=self.ZIP_FOLDER_NAME)
+        patch(patch_string=patch_content2, base_path='proj')
 
         cmake = CMake(self)
         if self.settings.os != "Windows":

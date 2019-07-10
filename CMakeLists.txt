@@ -8,7 +8,7 @@ project(PROJ4 C)
 set(PROJECT_INTERN_NAME PROJ)
 
 # added for conan package
-set(PROJ4_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/proj.4-4.9.2)
+set(PROJ4_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/proj)
 
 #################################################################################
 # PROJ4 CMake modules
